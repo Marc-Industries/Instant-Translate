@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Writer Settings</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 350px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1f2937;
+      color: #f3f4f6;
+      padding: 0;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+      padding: 20px;
+      text-align: center;
+    }
+
+    .header-icon {
+      width: 48px;
+      height: 48px;
+      background: white;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .header-icon svg {
+      width: 28px;
+      height: 28px;
+      color: #3b82f6;
+    }
+
+    h1 {
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #9ca3af;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px 12px;
+      background: #374151;
+      border: 1px solid #4b5563;
+      border-radius: 8px;
+      color: #f3f4f6;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #3b82f6;
+      background: #4b5563;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    select {
+      cursor: pointer;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background: #2563eb;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .status {
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      text-align: center;
+      display: none;
+    }
+
+    .status.success {
+      background: rgba(5, 150, 105, 0.2);
+      color: #6ee7b7;
+      border: 1px solid rgba(5, 150, 105, 0.3);
+    }
+
+    .status.error {
+      background: rgba(220, 38, 38, 0.2);
+      color: #fca5a5;
+      border: 1px solid rgba(220, 38, 38, 0.3);
+    }
+
+    .help-text {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    .help-text a {
+      color: #60a5fa;
+      text-decoration: none;
+    }
+
+    .help-text a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      padding: 16px 20px;
+      background: #111827;
+      text-align: center;
+      font-size: 10px;
+      color: #6b7280;
+      border-top: 1px solid #374151;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-icon">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+    </div>
+    <h1>AI Writer</h1>
+    <p class="subtitle">TRANSLATION ASSISTANT</p>
+  </div>
+
+  <div class="content">
+    <form id="settingsForm">
+      <div class="form-group">
+        <label for="apiProvider">AI Provider</label>
+        <select id="apiProvider">
+          <option value="gemini">Google Gemini</option>
+          <option value="huggingface">Hugging Face</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="geminiKeyGroup">
+        <label for="apiKey">Gemini API Key</label>
+        <input 
+          type="password" 
+          id="apiKey" 
+          placeholder="Enter your Gemini API key"
+        >
+        <p class="help-text">
+          Ottieni la tua chiave API gratuita su 
+          <a href="https://makersuite.google.com/app/apikey" target="_blank">Google AI Studio</a>
+        </p>
+      </div>
+
+      <div class="form-group" id="hfKeyGroup" style="display: none;">
+        <label for="hfApiKey">Hugging Face API Key</label>
+        <input 
+          type="password" 
+          id="hfApiKey" 
+          placeholder="Enter your HF API key"
+        >
+        <p class="help-text">
+          Ottieni la tua chiave API su 
+          <a href="https://huggingface.co/settings/tokens" target="_blank">Hugging Face</a>
+        </p>
+      </div>
+
+      <div class="form-group" id="hfModelGroup" style="display: none;">
+        <label for="hfModel">Hugging Face Model</label>
+        <select id="hfModel">
+          <option value="mistralai/Mixtral-8x7B-Instruct-v0.1">Mixtral 8x7B</option>
+          <option value="meta-llama/Meta-Llama-3-8B-Instruct">Llama 3 8B</option>
+          <option value="microsoft/Phi-3-mini-4k-instruct">Phi-3 Mini</option>
+          <option value="HuggingFaceH4/zephyr-7b-beta">Zephyr 7B</option>
+        </select>
+        <p class="help-text">
+          Scegli il modello da utilizzare per le traduzioni
+        </p>
+      </div>
+
+      <div class="form-group">
+        <label for="targetLanguage">Target Language</label>
+        <select id="targetLanguage">
+          <option value="English">English</option>
+          <option value="Italian">Italian</option>
+          <option value="Spanish">Spanish</option>
+          <option value="French">French</option>
+          <option value="German">German</option>
+          <option value="Portuguese">Portuguese</option>
+          <option value="Dutch">Dutch</option>
+          <option value="Polish">Polish</option>
+          <option value="Russian">Russian</option>
+          <option value="Japanese">Japanese</option>
+          <option value="Chinese (Simplified)">Chinese (Simplified)</option>
+          <option value="Korean">Korean</option>
+          <option value="Arabic">Arabic</option>
+          <option value="Hindi">Hindi</option>
+          <option value="Turkish">Turkish</option>
+        </select>
+      </div>
+
+      <button type="submit">Save Settings</button>
+      
+      <div class="status" id="status"></div>
+    </form>
+  </div>
+
+  <div class="footer">
+    Powered by Google Gemini & Hugging Face
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
